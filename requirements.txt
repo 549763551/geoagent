@@ -1,0 +1,19 @@
+# GeoAgent 运行依赖（Python 3.12）
+# 安装：python -m pip install -r requirements.txt
+
+# --- Web 服务层 ---
+fastapi==0.141.1
+uvicorn==0.51.0
+websockets==17.1
+pydantic==2.13.4
+
+# --- 大模型调用与配置 ---
+requests==2.31.0
+python-dotenv==1.0.0
+
+# --- 栅格与科学计算 ---
+rasterio==1.4.4
+numpy==2.2.6
+scipy==1.14.0
+scikit-learn==1.5.1
+matplotlib==3.9.2

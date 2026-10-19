@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>GeoAgent · 遥感栅格分析智能体</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;900&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+<div class="atmos" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+
+<header class="topbar">
+  <div class="brand">
+    <svg class="mark" viewBox="0 0 40 40" aria-hidden="true">
+      <circle cx="20" cy="20" r="17" />
+      <circle cx="20" cy="20" r="11" class="dash" />
+      <path d="M3 20h34M20 3v34" class="cross" />
+      <circle cx="20" cy="20" r="3.4" class="core" />
+    </svg>
+    <div class="brand-text">
+      <h1>GeoAgent</h1>
+      <p>遥感栅格分析智能体</p>
+    </div>
+  </div>
+  <div class="topmeta">
+    <span class="badge" id="modeBadge"><i class="pulse"></i><span>连接中</span></span>
+    <button class="ghost" id="resetBtn" type="button">新会话</button>
+  </div>
+</header>
+
+<main class="workspace">
+  <aside class="panel side-left">
+    <section class="block">
+      <h2><span class="tick"></span>数据资源</h2>
+      <div class="finder">
+        <input id="dataSearch" type="search" autocomplete="off" placeholder="搜索：植被 / 降水 / 地形 / 人口…" />
+        <div class="tabs" id="dataTabs">
+          <button class="tab on" type="button" data-tab="dataset">数据集</button>
+          <button class="tab" type="button" data-tab="index">可算指数</button>
+        </div>
+      </div>
+      <div class="asset-list" id="assetList"><p class="empty">加载中…</p></div>
+      <p class="hint" id="assetHint"></p>
+    </section>
+  </aside>
+
+  <section class="stage">
+    <div class="rail" id="rail">
+      <div class="rail-step" data-stage="understanding"><span>01</span>理解任务</div>
+      <div class="rail-step" data-stage="recall"><span>02</span>匹配数据</div>
+      <div class="rail-step" data-stage="planning"><span>03</span>制定方案</div>
+      <div class="rail-step" data-stage="acting"><span>04</span>执行分析</div>
+      <div class="rail-step" data-stage="finalizing"><span>05</span>交付结果</div>
+    </div>
+
+    <div class="stream" id="stream">
+      <div class="intro" id="intro">
+        <p class="kicker">开箱即用的遥感分析</p>
+        <h2>说出你要分析什么，剩下的交给它</h2>
+        <p class="lede">左侧挑选数据、下方选用现成模板，或者直接用一句话描述需求。智能体会自己找数据、定方案、跑计算，最后把图件、表格和报告交到你手上。</p>
+        <div class="starters">
+          <p>常用分析，点一下就能开始：</p>
+          <div class="starter-grid" id="starterGrid"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="composer">
+      <div class="builder" id="builder">
+        <div class="builder-head">
+          <span class="builder-title">任务模板</span>
+          <span class="builder-note" id="taskHint"></span>
+          <button class="link" type="button" id="builderToggle">收起</button>
+        </div>
+        <div class="builder-body" id="builderBody">
+          <label class="field">
+            <span>分析类型</span>
+            <select id="fTask"></select>
+          </label>
+          <label class="field" id="fieldSubject">
+            <span>分析对象</span>
+            <select id="fSubject"></select>
+          </label>
+          <div class="field" id="fieldRange">
+            <span>时间范围</span>
+            <div class="dual">
+              <select id="fStart"></select><em>至</em><select id="fEnd"></select>
+            </div>
+          </div>
+          <label class="field" id="fieldYear">
+            <span>年份</span>
+            <select id="fYear"></select>
+          </label>
+          <label class="field" id="fieldClimate">
+            <span>气候变量</span>
+            <select id="fClimate">
+              <option value="precip">降水量</option>
+              <option value="temp">气温</option>
+            </select>
+          </label>
+          <label class="check" id="fieldReport">
+            <input type="checkbox" id="fReport" />
+            <span>附带生成分析报告</span>
+          </label>
+          <button class="apply" type="button" id="builderApply">填入任务</button>
+        </div>
+        <p class="preview" id="builderPreview"></p>
+      </div>
+
+      <form id="composerForm" autocomplete="off">
+        <textarea id="input" rows="1" placeholder="也可以直接描述任务，例如：评估 2000-2025 年植被覆盖变化，并生成一份分析报告"></textarea>
+        <button id="sendBtn" type="submit"><span>开始分析</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h14M12 5l7 7-7 7"/></svg></button>
+      </form>
+    </div>
+  </section>
+
+  <aside class="panel side-right">
+    <section class="block">
+      <h2><span class="tick"></span>任务记录</h2>
+      <div class="history" id="historyList"><p class="empty">还没有执行过任务</p></div>
+    </section>
+    <section class="block">
+      <div class="block-head">
+        <h2><span class="tick"></span>分析产物</h2>
+        <button class="link" type="button" id="zipBtn" disabled>打包下载</button>
+      </div>
+      <div class="gallery" id="gallery"><p class="empty">图件、数据表与报告会汇总在这里</p></div>
+    </section>
+  </aside>
+</main>
+
+<div class="lightbox" id="lightbox" hidden><img alt="" id="lightboxImg" /><button type="button" id="lightboxClose">关闭 ✕</button></div>
+
+<script src="/app.js"></script>
+</body>
+</html>
