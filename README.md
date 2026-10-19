@@ -12,6 +12,14 @@
 ![rasterio](https://img.shields.io/badge/rasterio-GDAL-4B8BBE)
 ![LLM](https://img.shields.io/badge/LLM-可选-8B5CF6)
 
+<p align="center">
+  <img src="docs/preview.jpg" alt="GeoAgent 工作台界面" width="100%">
+</p>
+
+<p align="center">
+  <sub>真实运行界面（离线规则模式）：左侧数据资源 · 中间任务区 · 右侧任务记录与产物画廊</sub>
+</p>
+
 ---
 
 ## 核心能力
@@ -66,6 +74,7 @@
 ├── frontend/            # 原生 Web 前端（index.html / styles.css / app.js）
 ├── scripts/
 │   └── make_demo_data.py  # 生成合成演示数据（无真实数据也能跑通）
+├── docs/                # 界面预览图（README 顶部展示）
 ├── raw/                 # 原始遥感数据（不入库，见下方约定）
 ├── outputs/             # 运行产物（不入库）
 ├── data/                # 运行期状态：目录缓存、长期记忆（不入库）
