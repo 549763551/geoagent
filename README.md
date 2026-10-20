@@ -11,6 +11,7 @@
 ![FastAPI](https://img.shields.io/badge/FastAPI-009688?logo=fastapi&logoColor=white)
 ![rasterio](https://img.shields.io/badge/rasterio-GDAL-4B8BBE)
 ![LLM](https://img.shields.io/badge/LLM-可选-8B5CF6)
+![License](https://img.shields.io/badge/License-MIT-22C55E)
 
 <p align="center">
   <img src="docs/preview.jpg" alt="GeoAgent 工作台界面" width="100%">
@@ -216,3 +217,7 @@ Python 3.10+ · FastAPI（SSE 流式）· rasterio · NumPy / SciPy / scikit-lea
 - 使用真实数据时，请自行确认数据源的许可与引用要求（如 MODIS / GLDAS / JRC / GPW / GHS /
   TerraClimate / CMIP6 等均有各自的使用条款）。
 - `raw/`、`outputs/`、`data/`、`.env` 均已加入 `.gitignore`，不会被误提交。
+
+## 许可证
+
+本项目基于 [MIT 许可证](LICENSE) 开源，可自由使用、修改与分发，请保留版权声明。
